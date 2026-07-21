@@ -1,0 +1,93 @@
+.actividad5-contenedor {
+  max-width: 560px;
+  margin: 3rem auto;
+  padding: 2rem;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  text-align: left;
+}
+
+.actividad5-contenedor h1 {
+  font-size: 1.4rem;
+  margin-bottom: 0.25rem;
+  color: #213547;
+}
+
+.subtitulo {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+.seccion {
+  padding-top: 1.25rem;
+  margin-top: 1.25rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.seccion h2 {
+  font-size: 1.05rem;
+  color: #213547;
+  margin-bottom: 0.4rem;
+}
+
+.seccion p {
+  font-size: 0.85rem;
+  color: #4b5563;
+  margin-bottom: 0.75rem;
+}
+
+.seccion code {
+  background: #f3f4f6;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.imagen-demo {
+  display: block;
+  width: 100%;
+  max-width: 240px;
+  border-radius: 10px;
+}
+
+.campo {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.campo label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+  color: #374151;
+}
+
+.campo select {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.campo select:focus {
+  outline: none;
+  border-color: #646cff;
+}
+
+.campo select:disabled {
+  background: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.resultado {
+  font-size: 0.9rem;
+  color: #1e3a8a;
+  background: #eff6ff;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+}

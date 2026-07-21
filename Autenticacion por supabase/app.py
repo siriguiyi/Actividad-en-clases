@@ -41,6 +41,36 @@ def index():
     html += '</ul>'
     return html
 
+@app.route("/lestudiantes", methods=["GET"])
+def listar_estudiantes():
+    try:
+        response = (
+            supabase
+            .table("estudiantes")
+            .select("id,nombre,correo,edad")
+            .execute()
+        )
+        return jsonify(response.data), 200
+    except Exception as e:
+        return jsonify({
+            "message": "Error retrieving students",
+            "error": str(e)
+        }), 500
+
+@app.route('/estudiantes', methods=['POST'])
+def crear_estudiante():
+    datos = request.json
+    response = (
+        supabase
+        .table("estudiantes")
+        .insert({
+            "nombre": datos["nombre"],
+            "correo": datos["correo"],
+            "edad": datos["edad"]
+        })
+        .execute()
+    )
+    return jsonify(response.data), 201
 
 @app.route("/lusuarios", methods=["GET"])
 def listar_usuarios():

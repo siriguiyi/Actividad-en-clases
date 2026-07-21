@@ -16,7 +16,13 @@ function App() {
     telefono: '',
     edad: ''
   });
-
+// --- ESTADOS PARA ESTUDIANTES ---
+  const [estudiantes, setEstudiantes] = useState([]);
+  const [formDataEstudiante, setFormDataEstudiante] = useState({
+    nombre: '',
+    correo: '',
+    edad: ''
+  });
   // useEffect vacío se ejecuta una vez al montar el componente.
   // Aquí se hacía una llamada inicial para obtener usuarios, pero la función
   // se refactorizó a `cargarUsuarios` para reutilizarla también tras crear.
@@ -43,7 +49,14 @@ function App() {
   // Carga inicial al montar el componente usando la función reutilizable
   useEffect(() => {
       cargarUsuarios();
+      cargarEstudiantes();
     }, []);
+  const cargarEstudiantes = () => {
+      fetch("http://127.0.0.1:5000/lestudiantes")
+        .then((response) => response.json())
+        .then((data) => setEstudiantes(data))
+        .catch((error) => console.error("Error cargando estudiantes:", error));
+    };
 
   // Manejador para los cambios en los inputs del formulario.
   // Actualiza el campo correspondiente en `formData` según `name` del input.
@@ -80,7 +93,32 @@ function App() {
       })
       .catch((error) => console.error("Error creando usuario:", error));
   };
+  const handleChangeEstudiante = (e) => {
+    const { name, value } = e.target;
+    setFormDataEstudiante({
+      ...formDataEstudiante,
+      [name]: value
+    });
+  };
 
+  const handleSubmitEstudiante = (e) => {
+    e.preventDefault();
+    fetch("http://127.0.0.1:5000/estudiantes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formDataEstudiante),
+    })
+      .then((response) => {
+        if (response.status === 201) {
+          alert("Estudiante creado exitosamente");
+          cargarEstudiantes();
+          setFormDataEstudiante({ nombre: '', correo: '', edad: '' });
+        } else {
+          alert("Hubo un error al crear el estudiante");
+        }
+      })
+      .catch((error) => console.error("Error creando estudiante:", error));
+  };
 
 
 
@@ -129,6 +167,42 @@ function App() {
               <td>{user.correo}</td>
               <td>{user.telefono}</td>
               <td>{user.edad}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {/* ========================================= */}
+      {/* SECCIÓN DE ESTUDIANTES                    */}
+      {/* ========================================= */}
+      <hr style={{ margin: '40px 0' }} />
+      <h2>Crear Nuevo Estudiante</h2>
+      
+      <form onSubmit={handleSubmitEstudiante} style={{ marginBottom: '30px', display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '300px' }}>
+        <input type="text" name="nombre" placeholder="Nombre completo" value={formDataEstudiante.nombre} onChange={handleChangeEstudiante} required />
+        <input type="email" name="correo" placeholder="Correo" value={formDataEstudiante.correo} onChange={handleChangeEstudiante} required />
+        <input type="number" name="edad" placeholder="Edad" value={formDataEstudiante.edad} onChange={handleChangeEstudiante} />
+        
+        <button type="submit" style={{ padding: '8px', cursor: 'pointer' }}>Guardar Estudiante</button>
+      </form>
+
+      <h2>Lista de Estudiantes</h2>
+      <table border="1" style={{ width: '100%', textAlign: 'left', borderCollapse: 'collapse' }}>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Edad</th>
+          </tr>
+        </thead>
+        <tbody>
+          {estudiantes.map(est => (
+            <tr key={est.id}>
+              <td>{est.id}</td>
+              <td>{est.nombre}</td>
+              <td>{est.correo}</td>
+              <td>{est.edad}</td>
             </tr>
           ))}
         </tbody>
